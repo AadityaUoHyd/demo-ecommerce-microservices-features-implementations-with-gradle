@@ -1,0 +1,18 @@
+server:
+  port: 9093
+
+spring:
+  application:
+    name: Product Microservice for QA Environment
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: shopping-qa
+
+product:
+  currencies:
+    - INR
+    - USD
+    - EUR
+    - AUD

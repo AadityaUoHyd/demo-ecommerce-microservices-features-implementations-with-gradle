@@ -1,0 +1,19 @@
+server:
+  port: 9092
+
+spring:
+  application:
+    name: Product Microservice for DEV Environment
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: shopping-dev
+
+product:
+  currencies:
+    - INR
+    - USD
+    - EUR
+    - AUD
+    - DINAR

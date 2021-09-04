@@ -1,0 +1,71 @@
+plugins {
+	id 'org.springframework.boot' version '2.4.8'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'jacoco'
+	id "org.sonarqube" version "2.6"
+}
+
+group = 'org.aadi.ecommerce'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springBootAdminVersion', "2.3.1")
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'de.codecentric:spring-boot-admin-starter-client'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	//implementation group: 'org.springdoc', name: 'springdoc-openapi-ui'
+	implementation 'org.openapitools:openapi-generator-gradle-plugin:3.0.1'
+	testImplementation ('org.springframework.boot:spring-boot-starter-test'){
+		exclude group: 'org.junit.vintage', module:'junit-vintage-engine'
+	}
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "de.codecentric:spring-boot-admin-dependencies:${springBootAdminVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+jacoco{
+	toolVersion = "0.8.5"
+	//reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
+jacocoTestReport{
+	dependsOn test      //Here, we are telling jacoco that you are depended on Test. Let first Test run, then only jacoco will run.
+	reports {
+		xml.enabled = true         //Sonar will read xml file of jacoco
+		csv.enabled = false
+		//html.destination file("{buildDir}/jacacoHtml")
+	}
+}
+
+sonarqube{
+	properties{
+		property "sonar.projectName", "product"
+		//property "sonar.branch.name", "test branch"
+		property "sonar.host.url", "http://192.168.99.100:9000"
+		//property "sonar.login", "7h38adfh8dkfk73e093e021nhd9skhks"
+	}
+}
+// To Get Jacoco & Sonar report, Use Gradle Goal For Testing As #>  gradlew test sonar
