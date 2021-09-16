@@ -15,7 +15,6 @@ keeping business specification at minimal.
 - Hazelcast cache
 - Swagger
 - Resilence4j
-- Unit Testing of service, controller, repository
-- Writing Integration test
+- Unit Testing 
 - Code coverage with Jacoco
 - Static code analysis using SonarCube
